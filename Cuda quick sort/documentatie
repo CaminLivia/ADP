@@ -1,0 +1,49 @@
+   Quicksort efectuează sortarea bazându-se pe o strategie divide et impera. Astfel, el împarte lista de sortat în două subliste
+mai ușor de sortat. Pașii algoritmului sunt:
+
+1. Se alege un element al listei, denumit pivot
+2. Se reordonează lista astfel încât toate elementele mai mici decât pivotul să fie plasate înaintea pivotului și toate elementele mai
+   mari să fie după pivot. După această partiționare, pivotul se află în poziția sa finală.
+3. Se sortează recursiv sublista de elemente mai mici decât pivotul și sublista de elemente mai mari decât pivotul.
+
+O listă de dimensiune 0 sau 1 este considerată sortată.
+
+Pseudocod QuickSort:
+
+procedura QUICKSORT(A, inf, sup) este
+| i← inf
+| j← sup
+| x← A[(i+j) div 2]
+| repeta
+| | cat timp (i<sup)/\ (A[i]<x) executa i← i+1
+| | cat timp (j>inf) /\ (A[j]>x) executa j← j-1
+| | daca i <=j atunci
+| | |   t← A[i]; A[i]← A[j]; A(j)← t
+| | |   i← i+1; j← j-1
+| | |___▄
+| pana cand (i>j)
+| daca (inf<j) atunci QUICKSORT(A, inf, j)
+| daca (i<sup) atunci QUICKSORT(A, i, sup)
+|___▄
+
+O posibilă implementare a algoritmului, in limbajul C sub forma unei funcții, este redată mai jos:
+
+void QUICKSORT(int inf, int sup) {
+  int x, i, j, t;
+  i = inf; 
+  j = sup;
+  x = A[(i + j) / 2];
+  do {
+    while ( (i < sup) && (A[i] < x) ) i++;
+    while ( (j > inf) &&(A[j] > x) ) j--;
+    if ( i<= j ) {   
+      t = A[i];
+      A[i] = A[j]; 
+      A[j] = t;
+      i++; 
+      j--;
+    }
+  } while ( i <= j );
+  if ( inf < j ) QUICKSORT(inf, j);
+  if ( i < sup ) QUICKSORT(i, sup);
+}
